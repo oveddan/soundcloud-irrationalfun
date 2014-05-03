@@ -6,5 +6,5 @@ test:
 		--slow 2s \
 		--harmony \
 		--bail
-
+		
 .PHONY: test
