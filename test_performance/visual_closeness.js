@@ -20,8 +20,12 @@ for(var i = 0; i < 1000000; i++) {
 var visualCloseness = new VisualCloseness(originalSequence);
 
 var start = new Date();
-for(var i = 0, max = sequences.length; i < max; i++) {
-  visualCloseness.differenceScore(sequences[i]);
+for(var j = 0; j < 10; j++) {
+  for(var i = 0, max = sequences.length; i < max; i++) {
+    visualCloseness.differenceScore(sequences[i]);
+  }
+  // if(j % 10 == 0)
+  //   console.log(j);
 }
 var end = new Date();
 
