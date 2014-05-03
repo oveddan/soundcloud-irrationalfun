@@ -1,7 +1,7 @@
 var chai = require('chai'),
   expect = chai.expect;
 
-var VisualCloseness = require('../visual_closeness');
+var VisualCloseness = require('../lib/visual_closeness');
 
 describe('VisualCloseness', function(){
   describe('differenceScore(sequence)', function(){

@@ -1,4 +1,4 @@
-var VisualCloseness = require('../visual_closeness');
+var VisualCloseness = require('../lib/visual_closeness');
 
 var sequences = [];
 

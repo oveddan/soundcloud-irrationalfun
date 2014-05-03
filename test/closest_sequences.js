@@ -14,7 +14,7 @@ describe('ClosestSequences', function(){
         this.closestSequences.insert([2, 2, 2]);
         this.closestSequences.insert([3, 3, 3]);
 
-        expect(this.closestSequences.all()).to eq([
+        expect(this.closestSequences.all().sort()).to.eql([
           [1, 1, 1],
           [2, 2, 2],
           [3, 3, 3]
@@ -24,8 +24,8 @@ describe('ClosestSequences', function(){
     describe('if the maximum number of sequences has been reached', function(){
       before(function(){
         this.closestSequences = new ClosestSequences([0, 0, 0], 3);
-        this.closestSequences.insert([3, 3, 3]);
         this.closestSequences.insert([6, 6, 6]);
+        this.closestSequences.insert([3, 3, 3]);
         this.closestSequences.insert([8, 8, 8]);
       });
       describe('if the sequence\'s difference score is greater than or equal to the difference score of the existing sequences', function(){
@@ -33,24 +33,28 @@ describe('ClosestSequences', function(){
           this.closestSequences.insert([9, 9, 9]);
           this.closestSequences.insert([9, 8, 7]);
 
-          expect(this.closestSequences.all()).to eq([
+          expect(this.closestSequences.all().sort()).to.eql([
             [3, 3, 3],
             [6, 6, 6],
             [8, 8, 8]
           ]);
         });
       });
-      describe('if the last removed sequence\'s difference score is greater than the difference score of the sequence', function(){
+      describe('if the sequence\'s difference score is less than the difference scores of any of the existing sequences', function(){
         it('gets added to the closest sequences', function(){
+          this.closestSequences.insert([1, 1, 1]);
 
+          expect(this.closestSequences.all()).to.include([1, 1, 1]);
         });
-        describe('if the number of closest sequences is greater than the max number of close sequences', function(){
-          it('removes the least close sequence (with the highest cloness score)', function(){
+        it('removes the element with the highest difference score', function(){
+          this.closestSequences.insert([1, 1, 1]);
+          this.closestSequences.insert([7, 7, 7]);
 
-          });
-          it('sets the removed sequence\'s difference score to the difference score of the removed sequence', function(){
-
-          });
+          expect(this.closestSequences.all().sort()).to.eql([
+            [1, 1, 1],
+            [3, 3, 3],
+            [6, 6, 6]
+          ]);      
         });
       });
     });
