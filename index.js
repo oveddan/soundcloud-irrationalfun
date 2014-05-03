@@ -4,41 +4,50 @@ var readStream = fs.createReadStream('pi-billion.txt', {
   encoding: 'utf-8',
   autoClose: true,
   start: 2,
-  end: 10
+  end: 100
 });
 
 var Transform = require('stream').Transform;
 
-var numberParser = new Transform();
-numberParser._transform = function(data, encoding, next) {
+var characterStreamer = new Transform();
+characterStreamer._transform = function(chunk, encoding, next) {
   var result = [];
   // console.log(data.toString());
-  var dataString = data.toString();
-
-  console.log('reading');
+  var dataString = chunk.toString();
 
   for(var i = 0; i < dataString.length; i++){
+    console.log('pushing: ');
+    console.log(dataString[i]);
     this.push(dataString[i]);
   }
   next();
 };
 
-numberParser.on('error', function(e, err){
+characterStreamer.on('error', function(e, err){
   console.log(e);
 });
 
 var Writable = require('stream').Writable;
 
-var output = new Writable();
+var sequenceStreamer = new Transform({ objectMode: true });
 
-output._write = function(chunk, encoding, callback){
-  console.log(chunk.toString());
-  callback();
+sequenceStreamer._transform = function(chunk, encoding, next){
+  var sequence = [];
+  for(var i = 0; i < 84; i++) {
+    console.log('pulling: ');
+    console.log(parseInt(chunk.toString()));
+    sequence[i] = parseInt(chunk.toString());
+    next();
+  }
+  this.push(sequence);
+  next();
 }
 
-console.log('piping');
+sequenceStreamer.on('error', function(e, err){
+  console.log(e);
+});
 
-readStream.pipe(numberParser).pipe(output);
+readStream.pipe(characterStreamer).pipe(sequenceStreamer);
 
 
 // readStream.on('open', function () {
