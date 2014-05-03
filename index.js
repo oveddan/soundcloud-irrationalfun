@@ -6,7 +6,7 @@ var readStream = fs.createReadStream('pi-billion.txt', {
   encoding: 'utf-8',
   autoClose: true,
   start: 2,
-  end: 10000000
+  end: 10000
 });
 
 var Transform = require('stream').Transform;
@@ -40,24 +40,39 @@ sequenceStreamer._transform = function(chunk, encoding, next) {
       closestSequences.insert(sequence);
   }
 
-  console.log('next iteration');
+  // console.log('next iteration');
 
   next();
 };
 
+var hexCodes = {
+  0 : 'ffffff',
+  1 : 'f0f0f0',
+  2 : 'ebebeb',
+  3 : 'd0d0d0',
+  4 : 'c1c1c1', 
+  5 : 'a8a8a8',
+  6 : '878787',
+  7 : '535353',
+  8 : '333333',
+  9 : '000000'
+}
+
 sequenceStreamer._flush = function(){
-  console.log(closestSequences.all().map(function(sequence){
+  var hexGrid = closestSequences.all().map(function(sequence){
     var result = [];
     var index = 0;
     for(var i = 0; i < 6; i++) {
       result.push([]);
       for(var j = 0; j < 14; j++) {
-        result[i].push(sequence[index]);
+        result[i].push(hexCodes[sequence[index]]);
         index++;
       }
     }
     return result;
-  }));
+  });
+
+console.log(hexGrid);
 }
 
 readStream.pipe(sequenceStreamer);
