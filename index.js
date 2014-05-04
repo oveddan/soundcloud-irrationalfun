@@ -43,10 +43,13 @@ sequenceStreamer._transform = function(chunk, encoding, next) {
   next();
 };
 
+// when done processing all sequences, convert into a
+// grid and output it
 sequenceStreamer._flush = function(){
   var hexGrid = closestSequences.all().map(function(sequence){
     var result = [];
     var index = 0;
+
     // turn into 14 x 6 hex grid
     for(var i = 0; i < 6; i++) {
       result.push([]);
@@ -55,6 +58,7 @@ sequenceStreamer._flush = function(){
         index++;
       }
     }
+
     return result;
   });
 

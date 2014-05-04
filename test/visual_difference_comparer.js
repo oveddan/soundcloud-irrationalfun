@@ -1,17 +1,17 @@
 var chai = require('chai'),
   expect = chai.expect;
 
-var VisualCloseness = require('../lib/visual_closeness');
+var VisualDifferenceComparer = require('../lib/visual_difference_comparer');
 
-describe('VisualCloseness', function(){
+describe('VisualDifferenceComparer', function(){
   describe('differenceScore(sequence)', function(){
     it('calculates the sum of the differences of each element from the origin sequence', function(){
       var originalSequence = [0, 3, 2, 9, 5, 4, 0, 8, 3, 6, 2];
       var toCompareTo =      [1, 3, 0, 7, 6, 4, 4, 5, 2, 8, 6];
 
-      var visualCloseness = new VisualCloseness(originalSequence);
+      var comparer = new VisualDifferenceComparer(originalSequence);
 
-      var differenceScore = visualCloseness.differenceScore(toCompareTo);
+      var differenceScore = comparer.differenceScore(toCompareTo);
 
       var abs = Math.abs;
 

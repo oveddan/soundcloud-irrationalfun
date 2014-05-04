@@ -1,4 +1,4 @@
-var VisualCloseness = require('../lib/visual_closeness');
+var VisualDifferenceComparer = require('../lib/visual_difference_comparer');
 
 var sequences = [];
 
@@ -17,12 +17,12 @@ for(var i = 0; i < 1000000; i++) {
   sequences.push(generateRandomSequence());
 }
 
-var visualCloseness = new VisualCloseness(originalSequence);
+var comparer = new VisualDifferenceComparer(originalSequence);
 
 var start = new Date();
 for(var j = 0; j < 10; j++) {
   for(var i = 0, max = sequences.length; i < max; i++) {
-    visualCloseness.differenceScore(sequences[i]);
+    comparer.differenceScore(sequences[i]);
   }
   // if(j % 10 == 0)
   //   console.log(j);
