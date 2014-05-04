@@ -24,6 +24,8 @@ for(var j = 0; j < 10; j++) {
   for(var i = 0, max = sequences.length; i < max; i++) {
     comparer.differenceScore(sequences[i]);
   }
+  // if(j % 10 == 0)
+  //   console.log(j);
 }
 var end = new Date();
 
