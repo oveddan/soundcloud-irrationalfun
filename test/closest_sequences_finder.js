@@ -21,7 +21,7 @@ describe('ClosestSequencesFinder', function(){
         this.closestSequencesFinder.insert([2, 2, 2], 5);
         this.closestSequencesFinder.insert([3, 3, 3], 7);
 
-        expect(this.closestSequencesFinder.all()).to.eql([
+        expect(this.closestSequencesFinder.results()).to.eql([
           {
             sequence : [1, 1, 1],
             differenceScore : 3,
@@ -52,7 +52,7 @@ describe('ClosestSequencesFinder', function(){
           this.closestSequencesFinder.insert([7, 8, 9], 30);
           this.closestSequencesFinder.insert([9, 9, 9], 10);
 
-          expect(this.closestSequencesFinder.all()).to.eql([
+          expect(this.closestSequencesFinder.results()).to.eql([
             {
               sequence : [3, 3, 3],
               differenceScore : 9,
@@ -76,7 +76,7 @@ describe('ClosestSequencesFinder', function(){
           this.closestSequencesFinder.insert([1, 1, 1], 900);
           this.closestSequencesFinder.insert([7, 7, 7], 360);
 
-          expect(this.closestSequencesFinder.all()).to.eql([
+          expect(this.closestSequencesFinder.results()).to.eql([
             {
               sequence : [1, 1, 1],
               differenceScore : 3,
