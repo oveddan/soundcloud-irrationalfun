@@ -6,5 +6,8 @@ test:
 		--slow 2s \
 		--harmony \
 		--bail
+
+downloadpi:
+	wget http://stuff.mit.edu/afs/sipb/contrib/pi/pi-billion.txt
 		
-.PHONY: test
+.PHONY: test downloadpi
