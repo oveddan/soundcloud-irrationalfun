@@ -27,17 +27,11 @@ exports.calculateResults = function(req, res){
 }
 // helper meethods
 var converToModel = function(timeElapsed, results) {
-  var sortedResults = results.sort(function(a, b){
-    if(a.differenceScore < b.differenceScore)
-      return -1;
-    else
-      return 1;
-  });
-
-  var resultsWithSequencesAsGrid = sortedResults.map(function(result){
+  var resultsWithSequencesAsGrid = results.map(function(result){
     return {
-      rows : soundcloud.convertToHexGrid(result.sequence),
-      offset : result.offset
+      rows : soundcloud.convertToGrid(result.sequence),
+      offset : result.offset,
+      differenceScore : result.differenceScore
     };
   });
 
@@ -45,6 +39,7 @@ var converToModel = function(timeElapsed, results) {
     timeElapsed : numberWithCommas(timeElapsed),
     numberOfDigits : numberWithCommas(numDigits),
     numberOfCores : numberAvailableCPUs,
+    soundcloudLogo : soundcloud.sequenceAsGrid(),
     results : resultsWithSequencesAsGrid
   };
 };

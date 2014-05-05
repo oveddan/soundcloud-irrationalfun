@@ -13,13 +13,21 @@ block content
   h3 Number of digits of pi checked: 
     = numberOfDigits
 
+  h3 Soundcloud logo
+    table.image
+      each row in soundcloudLogo
+        tr
+          each digit in row
+            td(class=('a'+digit))
 
+  h3 Closest sequences to Soundcloud logo found in Pi:
   table.results
     tr
       th Rank
       th Image
       th Sequence
       th Offset
+      th Difference from original logo
     each result, index in results
       tr
         td
@@ -37,3 +45,5 @@ block content
             br
         td
           = result.offset
+        td
+          = result.differenceScore
