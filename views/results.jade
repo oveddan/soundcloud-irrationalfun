@@ -1,51 +1,39 @@
 extends layout
 
 block content
-  h1= Closest 
-  p Results
-  script#grid_template(type='text/x-handlebars-template').
-    {{#results}}
-      {{offset}}
-      <table>
-        {{#rows}}
-          <tr>
-            {{#row}}
-              <td class='a{{.}}'>
-              </td>
-            {{/row}}
-          </tr>
-        {{/rows}}
-      </table>
-    {{/results}}
+  h2 Results
+
+  h3 Time elapsed: 
+    = timeElapsed
+    = 'ms'
+
+  h3 Number of cores used: 
+    = numberOfCores
+
+  h3 Number of digits of pi checked: 
+    = numberOfDigits
 
 
-  #h3 Time elapsed: 
-      = timeElapsed
-
-  each result in results
-    .offset 
-      = result.offset
-    table
-      each row in result.rows
-        tr
-          each digit in row
-           td(class=('a'+digit))
-
-
-  script(type="text/javascript", src="http://code.jquery.com/jquery-2.1.1.min.js")
-  script(type="text/javascript", src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.2/handlebars.min.js")
-
-  script(type='text/javascript').
-    $(document).ready(function(){
-      var source   = $("#grid_template").html();
-      var template = Handlebars.compile(source);
-
-      var results = getResults();
-      var html = template(results);
-
-      $('#results').append(html);
-    });
-
-    var getResults = function(){
-      return !{JSON.stringify({results : results})};
-    }
+  table.results
+    tr
+      th Rank
+      th Image
+      th Sequence
+      th Offset
+    each result, index in results
+      tr
+        td
+          = index + 1
+        td
+          table.image
+            each row in result.rows
+              tr
+                each digit in row
+                  td(class=('a'+digit))
+        td
+          each row in result.rows
+            each digit in row
+              = digit + ' '
+            br
+        td
+          = result.offset

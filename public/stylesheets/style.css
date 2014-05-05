@@ -1,9 +1,13 @@
-table {
+table.results td {
+  padding: 10px;
+}
+
+table.image {
   border-spacing: 0;
   border-collapse: collapse;
   margin-bottom: 30px;
 }
-table td {
+table.image td {
   width: 5px;
   height: 5px;
   padding: 0;
