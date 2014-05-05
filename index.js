@@ -3,22 +3,19 @@ var fork = require('child_process').fork;
 
 var ClosestPiSequencesFinder = require('./lib/closest_pi_sequences_finder'),
   ClosestSequences = require('./lib/closest_sequences'),
-  soundCloudConfig = require('./lib/soundcloud_config');
+  soundcloud = require('./lib/soundcloud');
 
-var numChildProcesses = 6;
-
-var highestDigitsToRead = 10000000,
+var highestDigitsToRead = 1000000000,
   firstDigit = 2;
 
 var start = new Date();
 
-var buildParellelProcesses = function(numberOfChildProcesses){
-  var processes = [];
-
-  var digitsPerProcess = Math.ceil((highestDigitsToRead - firstDigit) / numChildProcesses);
+var getStartAndEndDigits = function(numberOfChildProcesses) {
+  var startAndEndDigits = [];
+  
+  var digitsPerProcess = Math.ceil((highestDigitsToRead - firstDigit) / numberOfChildProcesses);
 
   for(var childProcessNumber = 1; childProcessNumber <= numberOfChildProcesses; childProcessNumber ++){
-    
     var startDigit = firstDigit + ((childProcessNumber - 1) * digitsPerProcess),
         lastDigit = startDigit + digitsPerProcess + 84;
 
@@ -26,10 +23,25 @@ var buildParellelProcesses = function(numberOfChildProcesses){
     if(lastDigit > highestDigitsToRead)
       lastDigit = highestDigitsToRead;
 
-    var process = buildChildProcess(startDigit, lastDigit);
+    startAndEndDigits.push({
+      start : startDigit,
+      end : lastDigit
+    });
+  }
+
+  return startAndEndDigits;
+}
+
+var buildParellelProcesses = function(numberOfChildProcesses){
+  var processes = [];
+
+  var startAndEndDigits = getStartAndEndDigits(numberOfChildProcesses);
+
+  startAndEndDigits.forEach(function(startAndEndDigit){
+    var process = buildChildProcess(startAndEndDigit.start, startAndEndDigit.end);
 
     processes.push(process);
-  }
+  });
 
   return processes;
 }
@@ -54,10 +66,10 @@ var calculateDistanceInFork = function(firstDigitToRead, lastDigitToRead, callba
 };
 
 async.parallel(
-  buildParellelProcesses(6),
+  buildParellelProcesses(8),
   // callback with all data
   function(err, results){
-    var closestSequences = new ClosestSequences(soundCloudConfig.sequence, soundCloudConfig.numberOfResults);
+    var closestSequences = soundcloud.buildClosestSequencesFinder();
 
     var timeElapsed = new Date() - start;
 
@@ -66,9 +78,14 @@ async.parallel(
         closestSequences.insert(sequence);
       });
     });
+
+    var resultsAsHexGrid = closestSequences.all().map(function(sequence){
+      return soundcloud.convertToHexGrid(sequence);
+    });
   
     console.log('for num digits ' + highestDigitsToRead);
     console.log('time elapsed ' + timeElapsed + 'ms');
-    console.log('results:' + closestSequences.all());    
+    console.log('results:');
+    console.log(resultsAsHexGrid);    
   }
 );
