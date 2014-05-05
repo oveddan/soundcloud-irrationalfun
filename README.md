@@ -1,11 +1,11 @@
 # Soundcloud Logo in Pi Finder
-Created by Dan Oved, for the [Irrational Fun: Find Yourself at Berlin Buzzwords contest](https://help.github.com/articles/github-flavored-markdown)
+Created by Dan Oved, for the [Irrational Fun: Find Yourself at Berlin Buzzwords contest](https://developers.soundcloud.com/blog/buzzwords-contest)
 
 This application finds the 10 sequences in the first billion digits in pi that most closely approximate the Soundcloud logo.
 
 ## The algorithm
 
-It runs as a node.js app, that calculates the sequences most similar to the Soundcloud logo by inserting each sequence of 84 digits into a max heap of size 10, with the comparer being the difference of that sequence from the Soundcloud sequence.  At the end of the calculation, the 10 sequences with the smallest difference remain in the max heap.
+It runs as a node.js app, that calculates the sequences most similar to the Soundcloud logo by inserting each sequence of 84 digits into a max heap of size 10, with the comparer being the difference of that sequence from the Soundcloud sequence.  Whenever a sequence is added to the heap, the sequences with the biggest difference is removed from the heap. At the end of the calculation, the 10 sequences with the smallest difference remain in the max heap.
 
 The difference is calculated by comparing digit by digit the absolute value of the difference of each digit in the sequence from the Soundcloud sequence.
 
