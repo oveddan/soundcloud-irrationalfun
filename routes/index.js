@@ -9,7 +9,7 @@ exports.index = function(req, res){
 
 var numDigits = 1000000000;
 // need to use 1 less cpu than total, since 1 cpu is
-// dedicated to running app
+// dedicated to running app in a web server
 var numberAvailableCPUs = require('os').cpus().length - 1;
 
 // calculate results
@@ -25,6 +25,7 @@ exports.calculateResults = function(req, res){
     res.render('results', model);
   });
 }
+
 // helper meethods
 var converToModel = function(timeElapsed, results) {
   var resultsWithSequencesAsGrid = results.map(function(result){

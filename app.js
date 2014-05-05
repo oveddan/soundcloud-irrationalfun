@@ -32,4 +32,5 @@ app.post('/', routes.calculateResults);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+  console.log('To run the calculations, open http://localhost:3000 in your local browser');
 });
