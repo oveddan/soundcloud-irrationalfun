@@ -1,0 +1,40 @@
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+table td {
+  width: 5px;
+  height: 5px;
+  padding: 0;
+}
+.a0 {
+  background-color: #ffffff;
+}
+.a1 {
+  background-color: #f0f0f0;
+}
+.a2 {
+  background-color: #ebebeb;
+}
+.a3 {
+  background-color: #d0d0d0;
+}
+.a4 {
+  background-color: #d0d0d0;
+}
+.a5 {
+  background-color: #a8a8a8;
+}
+.a6 {
+  background-color: #878787;
+}
+.a7 {
+  background-color: #535353;
+}
+.a8 {
+  background-color: #333333;
+}
+.a9 {
+  background-color: #000000;
+}
