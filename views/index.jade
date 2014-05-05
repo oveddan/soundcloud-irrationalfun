@@ -5,4 +5,15 @@ block content
   h1 Soundcloud Logo Finder in Pi
   
   form(method='post')
+    label(for='number_of_digits') Number of digits of pi to scan
+    select#number_of_digits(name='number_of_digits')
+      option(value='1000000000') 1,000,000,0000
+      option(value='100000000') 100,000,0000
+      option(value='10000000') 10,000,0000
+      option(value='1000000') 1,000,0000
+      option(value='100000') 100,0000
+      option(value='10000') 10,000
+      option(value='1000') 1,000
+    br
+    br
     input(type='submit', value='Calculate closest sequences in pi to the Soudncloud Logo')
