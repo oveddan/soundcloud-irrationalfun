@@ -12,7 +12,11 @@ var numberAvailableCPUs = require('os').cpus().length - 1;
 
 // calculate results
 exports.calculateResults = function(req, res){
+  res.setTimeout(840000);
+
   var start = new Date();
+
+
 
   var numberOfDigits = parseInt(req.body['number_of_digits']);
   
